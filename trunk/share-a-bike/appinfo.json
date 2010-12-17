@@ -1,0 +1,9 @@
+{
+	"id": "com.mikeshoup.share-a-bike",
+	"version": "0.0.1", 
+	"vendor": "ShoupTech",
+	"type": "web",
+	"main": "index.html",
+	"title": "Share-a-Bike",
+	"icon": "icon.png"
+}

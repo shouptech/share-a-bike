@@ -1,0 +1,25 @@
+.kiosk_left_col {
+	float: left;
+}
+.kiosk_right_col {
+	float: right;
+}
+
+.kiosk_name {
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.kiosk_distance {
+	font-size: 1em;
+}
+
+.kiosk_address {
+	font-size: 0.8em;
+}
+
+.kiosk_availability {
+	font-size: 0.8em;
+	font-weight: bold;
+	text-align: right;
+}
