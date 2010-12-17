@@ -1,7 +1,7 @@
 {
 	"id": "com.mikeshoup.share-a-bike",
-	"version": "0.1.0", 
-	"vendor": "ShoupTech",
+	"version": "0.1.1", 
+	"vendor": "Mike Shoup",
 	"type": "web",
 	"main": "index.html",
 	"title": "Share-a-Bike",
