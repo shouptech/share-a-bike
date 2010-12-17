@@ -43,6 +43,7 @@ MainAssistant.prototype = {
 		
 		var onGpsFailure = function(result) {
 			// Failure in GPS
+			Mojo.Controller.errorDialog("Error while retrieving GPS data.");
 			this.showSpinner(false);
 		};
 		
@@ -54,9 +55,11 @@ MainAssistant.prototype = {
 		}.bind(this);
 		
 		onAjaxFailure = function(transport) {
-			// There has been a failure, stop spinning
+			// Ajax failure
 			this.showSpinner(false);
-		};
+			Mojo.Controller.errorDialog("Error while retrieving data from BCycle's API.");
+			
+		}.bind(this);
 		
 		// Get GPS Coord
 		this.getGpsCoord(onGpsSuccess, onGpsFailure);
