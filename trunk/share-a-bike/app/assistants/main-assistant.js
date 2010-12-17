@@ -16,47 +16,50 @@ MainAssistant.prototype = {
 		
 		// API URL for BCycle
 		var url = 'http://api.bcycle.com/services/mobile.svc/ListKiosks';
-		var gpsSuccess = true;
-		var gpsResult = 0;
+		gpsLatitude = 0;
+		gpsLongitude = 0;
+		
+		// Perform AJAX request to BCycle API
+		var ajaxRequest = function(url, onComplete, onFailure) {
+			var kioskRequest = new Ajax.Request(url, {
+				method: "get",
+				evalJSON: 'force',
+				contentType: 'application/x-www-form-urlencoded',
+				requestHeaders: {
+					"USER_AGENT": navigator.userAgent
+				},
+				onComplete: onComplete,
+				onFailure: onFailure
+			});
+		};
 		
 		var onGpsSuccess = function(result) {
-			gpsResult = result;
+			gpsLatitude = result.latitude;
+			gpsLongitude = result.longitude;
+			
+			// Place AJAX request
+			ajaxRequest(url, onAjaxComplete, onAjaxFailure);
 		};
 		
 		var onGpsFailure = function(result) {
-			gpsSuccess = false;
+			// Failure in GPS
 			this.showSpinner(false);
 		};
 		
 		// Function for when AJAX request is complete
-		var onAjaxComplete = function(transport) {
-		var kiosks = [5];
-		kiosks[0] = {name: "Name 1", distance: "0.1 mi", address: "100 Fake St", bikes: "0", docks: "1"};
-		kiosks[1] = {name: "Name 2", distance: "0.2 mi", address: "100 Fake St", bikes: "0", docks: "1"};
-		kiosks[2] = {name: "Name 3", distance: "0.3 mi", address: "100 Fake St", bikes: "0", docks: "1"};
-		kiosks[3] = {name: "Name 4", distance: "0.4 mi", address: "100 Fake St", bikes: "0", docks: "1"};
-		kiosks[4] = {name: "Name 5", distance: "12.2 mi", address: "100 Fake St", bikes: "0", docks: "1"};
-		// Display Kiosks
-		this.listModel = {
-				items: kiosks
-			};
-			this.controller.setWidgetModel("kioskList", this.listModel);
+		onAjaxComplete = function(transport) {
+			this.sortKiosks(gpsLatitude, gpsLongitude, transport);
 			// We're done, stop spinning 
 			this.showSpinner(false);
 		}.bind(this);
 		
-		var onAjaxFailure = function(transport) {
+		onAjaxFailure = function(transport) {
 			// There has been a failure, stop spinning
 			this.showSpinner(false);
 		};
 		
 		// Get GPS Coord
 		this.getGpsCoord(onGpsSuccess, onGpsFailure);
-		
-		if(gpsSuccess) {
-			// Place AJAX request
-			this.ajaxRequest(url, onAjaxComplete, onAjaxFailure);
-		};
 	},
 	
 	// Find GPS Coordinate
@@ -69,22 +72,70 @@ MainAssistant.prototype = {
 		}); 
 	},
 	
-	// Perform AJAX request to BCycle API
-	ajaxRequest: function(url, onComplete, onFailure) {
-		var kioskRequest = new Ajax.Request(url, {
-			method: "get",
-			evalJSON: 'force',
-			contentType: 'application/x-www-form-urlencoded',
-			requestHeaders: {
-				"USER_AGENT": navigator.userAgent
-			},
-			onComplete: onComplete,
-			onFailure: onFailure
-		});
-	},
-	
 	// Function to start/stop spinning
 	showSpinner: function(show) {
 		this.controller.get('findButton').mojo[(show ? 'activate' : 'deactivate')]();
 	},
+	
+	// Function to find nearest kiosks and sort them
+	sortKiosks: function(latitude, longitude, kioskResult) {
+		// Function to calculate distance between to lat/lon points
+		var calcDistance = function(lat1, lon1, lat2, lon2) {
+			var R = 3958.761; // Earth's Radius in miles
+			var dLat = (lat2-lat1) * Math.PI/180; // Convert to Radians
+			var dLon = (lon2-lon1) * Math.PI/180; // Convert to Radians
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * 
+				Math.sin(dLon/2) * Math.sin(dLon/2); 
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+			var d = R * c;
+			return d;
+		};
+		
+		var closestKiosks = [];
+		var nClosest = 5;
+		
+		// Initialize an empty set of kiosks
+		for(var i = 0; i < nClosest; i++) {
+			closestKiosks[i] = null;
+		}
+		
+		// Loop through the kiosks
+		for(i = 0; i < kioskResult.responseJSON.d.list.length; i++) {
+			var kiosk = kioskResult.responseJSON.d.list[i];
+			for(var j = 0; j < closestKiosks.length; j++) {
+				if(closestKiosks[j] === null) {
+					closestKiosks[j] = kiosk;
+					break;
+				} else {
+					var d1 = calcDistance(latitude, longitude, closestKiosks[j].Location.Latitude, closestKiosks[j].Location.Longitude);
+					var d2 = calcDistance(latitude, longitude, kiosk.Location.Latitude, kiosk.Location.Longitude);
+					
+					if(d2 < d1) {
+						// Swap
+						var temp = kiosk;
+						kiosk = closestKiosks[j];
+						closestKiosks[j] = temp;
+					}
+				}
+			}
+		}
+		
+		var kiosks = [];
+		for(i = 0; i < closestKiosks.length; i++) {
+			d = calcDistance(latitude, longitude, closestKiosks[i].Location.Latitude, closestKiosks[i].Location.Longitude);
+			kiosks[i] = {
+				name: closestKiosks[i].Name,
+				distance: d.toFixed(2) + ' mi',
+				address: closestKiosks[i].Address.Street,
+				bikes: closestKiosks[i].BikesAvailable,
+				docks: closestKiosks[i].DocksAvailable
+			};
+		}
+		
+		this.listModel = {
+			items: kiosks
+		};
+		this.controller.setWidgetModel("kioskList", this.listModel);
+	}
 };

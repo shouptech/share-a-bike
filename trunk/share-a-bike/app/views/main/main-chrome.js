@@ -7,7 +7,7 @@ opus.Gizmo({
 	styles: {
 		zIndex: 2,
 		opacity: 1,
-		bgImage: "images/Sharrow-BG.jpg"
+		bgImage: ""
 	},
 	chrome: [
 		{
@@ -21,13 +21,15 @@ opus.Gizmo({
 		},
 		{
 			name: "scroller1",
+			mode: "free",
 			scrollPosition: {
 				left: 0,
 				top: 0
 			},
 			type: "Palm.Mojo.Scroller",
 			l: 0,
-			t: 261,
+			t: 0,
+			h: "100%",
 			styles: {
 				cursor: "move",
 				overflow: "hidden"
@@ -46,7 +48,7 @@ opus.Gizmo({
 					type: "Palm.Mojo.List",
 					l: 0,
 					t: 0,
-					h: 100
+					h: "100%"
 				}
 			]
 		}
