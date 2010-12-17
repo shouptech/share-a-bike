@@ -1,8 +1,10 @@
 .kiosk_left_col {
 	float: left;
+	padding-left: 5px;
 }
 .kiosk_right_col {
 	float: right;
+	padding-right: 5px;
 }
 
 .kiosk_name {
