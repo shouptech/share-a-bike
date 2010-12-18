@@ -132,13 +132,30 @@ MainAssistant.prototype = {
 				distance: d.toFixed(2) + ' mi',
 				address: closestKiosks[i].Address.Street,
 				bikes: closestKiosks[i].BikesAvailable,
-				docks: closestKiosks[i].DocksAvailable
+				docks: closestKiosks[i].DocksAvailable,
+				latitude: closestKiosks[i].Location.Latitude,
+				longitude: closestKiosks[i].Location.Longitude
 			};
 		}
 		
 		this.listModel = {
 			items: kiosks
 		};
+		
+		this.gpsCoord = {
+			latitude: latitude,
+			longitude: longitude
+		};
+		
 		this.controller.setWidgetModel("kioskList", this.listModel);
+		
+		this.$.mapButton.setDisabled(false);
+	},
+	mapButtonTap: function(inSender, event) {
+		var argToScene = {
+			items: this.listModel.items,
+			gps: this.gpsCoord
+		};
+		this.controller.stageController.pushScene('mapScene', argToScene);
 	}
 };

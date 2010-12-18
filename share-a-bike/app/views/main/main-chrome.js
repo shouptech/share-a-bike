@@ -11,13 +11,15 @@ opus.Gizmo({
 	},
 	chrome: [
 		{
-			name: "findButton",
-			ontap: "findButtonTap",
-			disabled: undefined,
-			label: "Find Kiosks",
-			type: "Palm.Mojo.ActivityButton",
+			name: "mainHeader",
+			label: "Nearby Kiosks",
+			type: "Palm.Mojo.Header",
 			l: 0,
-			t: 0
+			t: 452,
+			styles: {
+				opacity: 1,
+				oneLine: false
+			}
 		},
 		{
 			name: "scroller1",
@@ -48,7 +50,36 @@ opus.Gizmo({
 					type: "Palm.Mojo.List",
 					l: 0,
 					t: 0,
-					h: "100%"
+					h: 100
+				}
+			]
+		},
+		{
+			name: "panel1",
+			layoutKind: "hbox",
+			dropTarget: true,
+			type: "Palm.Mojo.Panel",
+			l: 0,
+			t: 391,
+			h: 60,
+			controls: [
+				{
+					name: "mapButton",
+					ontap: "mapButtonTap",
+					disabled: true,
+					label: "Map",
+					type: "Palm.Mojo.Button",
+					l: 0,
+					t: 0
+				},
+				{
+					name: "findButton",
+					ontap: "findButtonTap",
+					disabled: undefined,
+					label: "Find",
+					type: "Palm.Mojo.ActivityButton",
+					l: 320,
+					t: 0
 				}
 			]
 		}
