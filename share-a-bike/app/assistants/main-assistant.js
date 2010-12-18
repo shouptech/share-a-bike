@@ -3,6 +3,9 @@ function MainAssistant(argFromPusher) {
 
 MainAssistant.prototype = {
 	setup: function() {
+		// Setup Application Menu
+		this.controller.setupWidget(Mojo.Menu.appMenu, AddSubMenuAttr, AddSubMenuModel); 
+		
 		Ares.setupSceneAssistant(this);
 		
 		this.radius = 0.5;

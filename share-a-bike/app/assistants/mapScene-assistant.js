@@ -6,6 +6,9 @@ function MapSceneAssistant(argFromPusher) {
 
 MapSceneAssistant.prototype = {
 	setup: function() {
+		// Setup Application Menu
+		this.controller.setupWidget(Mojo.Menu.appMenu, AddSubMenuAttr, AddSubMenuModel); 
+
 		Ares.setupSceneAssistant(this);
 		
 		this.$.kioskMap.setLongitude(this.gps.longitude);
