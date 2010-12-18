@@ -8,11 +8,12 @@ opus.Gizmo({
 	},
 	chrome: [
 		{
-			name: "header1",
-			label: "Nearby Kiosks",
-			type: "Palm.Mojo.Header",
+			name: "pageHeader1",
+			title: "Kiosks Map",
+			subtitle: "",
+			type: "Palm.Mojo.PageHeader",
 			l: 0,
-			t: 0
+			t: 49
 		},
 		{
 			name: "kioskMap",
