@@ -23,7 +23,6 @@ opus.Gizmo({
 		},
 		{
 			name: "scroller1",
-			mode: "free",
 			scrollPosition: {
 				left: 0,
 				top: 0
@@ -43,7 +42,7 @@ opus.Gizmo({
 					items: [],
 					useSampleData: false,
 					title: undefined,
-					itemHtml: "<div class=\"palm-row\">\n  <div class=\"kiosk_left_col\">\n    <div class=\"kiosk_name\">#{name}</div>\n    <div class=\"kiosk_address\">#{address}</div>\n  </div>\n  <div class=\"kiosk_right_col\">\n    <div class=\"kiosk_distance\">#{distance}</div>\n    <div class=\"kiosk_availability\">#{bikes}B #{docks}D</div>\n  </div>\n</div>",
+					itemHtml: "<div class=\"palm-row\">\n  <div class=\"kiosk_container\">\n    <div class=\"kiosk_name\">\n      #{name}\n    </div>\n    <div class=\"kiosk_address\">\n      #{address}\n    </div>\n    <div class=\"kiosk_stats\">\n      #{distance} | #{bikes} bikes | #{docks} docks\n    </div>\n  </div>\n</div>",
 					swipeToDelete: false,
 					rowTapHighlight: false,
 					rowFocusHighlight: false,
@@ -55,14 +54,87 @@ opus.Gizmo({
 			]
 		},
 		{
-			name: "panel1",
-			layoutKind: "hbox",
+			name: "panel2",
 			dropTarget: true,
 			type: "Palm.Mojo.Panel",
 			l: 0,
 			t: 391,
-			h: 60,
+			h: "120",
 			controls: [
+				{
+					name: "panel1",
+					layoutKind: "hbox",
+					dropTarget: true,
+					type: "Palm.Mojo.Panel",
+					l: 0,
+					t: 0,
+					h: 60,
+					controls: [
+						{
+							name: "findButton",
+							ontap: "findButtonTap",
+							disabled: undefined,
+							label: "Find",
+							type: "Palm.Mojo.ActivityButton",
+							l: 0,
+							t: 0,
+							h: "100%"
+						},
+						{
+							name: "group1",
+							dropTarget: true,
+							label: "",
+							type: "Palm.Mojo.Group",
+							l: 320,
+							t: 0,
+							h: "64",
+							styles: {
+								bgColor: ""
+							},
+							controls: [
+								{
+									name: "row1",
+									dropTarget: true,
+									type: "Palm.Mojo.Row",
+									l: 0,
+									t: 0,
+									h: "auto",
+									controls: [
+										{
+											name: "listSelector3",
+											value: 0.5,
+											choices: [
+												{
+													label: "1/4 Mile",
+													value: "0.25"
+												},
+												{
+													label: "1/2 Mile",
+													value: "0.5"
+												},
+												{
+													label: "3/4 Mile",
+													value: "0.75"
+												},
+												{
+													label: "1 Mile",
+													value: "1"
+												}
+											],
+											label: "",
+											onchange: "radiusSelectorChange",
+											type: "Palm.Mojo.ListSelector",
+											h: "48",
+											styles: {
+												bgColor: ""
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				},
 				{
 					name: "mapButton",
 					ontap: "mapButtonTap",
@@ -70,16 +142,7 @@ opus.Gizmo({
 					label: "Map",
 					type: "Palm.Mojo.Button",
 					l: 0,
-					t: 0
-				},
-				{
-					name: "findButton",
-					ontap: "findButtonTap",
-					disabled: undefined,
-					label: "Find",
-					type: "Palm.Mojo.ActivityButton",
-					l: 320,
-					t: 0
+					t: 60
 				}
 			]
 		}

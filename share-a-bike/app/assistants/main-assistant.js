@@ -4,6 +4,8 @@ function MainAssistant(argFromPusher) {
 MainAssistant.prototype = {
 	setup: function() {
 		Ares.setupSceneAssistant(this);
+		
+		this.radius = 0.5;
 	},
 	cleanup: function() {
 		Ares.cleanupSceneAssistant(this);
@@ -14,6 +16,8 @@ MainAssistant.prototype = {
 		// Start Spinning 
 		this.showSpinner(true);
 		
+		// Clear List
+		this.controller.setWidgetModel("kioskList", {items:[]});
 		// API URL for BCycle
 		var url = 'http://api.bcycle.com/services/mobile.svc/ListKiosks';
 		gpsLatitude = 0;
@@ -95,34 +99,25 @@ MainAssistant.prototype = {
 			return d;
 		};
 		
-		var closestKiosks = [];
-		var nClosest = 5;
+		var sortByDistance = function(kiosk1, kiosk2) {
+			var d1 = calcDistance(latitude, longitude, kiosk1.Location.Latitude, kiosk1.Location.Longitude);
+			var d2 = calcDistance(latitude, longitude, kiosk2.Location.Latitude, kiosk2.Location.Longitude);
+			
+			return d1 - d2;
+		};
 		
-		// Initialize an empty set of kiosks
-		for(var i = 0; i < nClosest; i++) {
-			closestKiosks[i] = null;
-		}
+		var closestKiosks = [];
 		
 		// Loop through the kiosks
 		for(i = 0; i < kioskResult.responseJSON.d.list.length; i++) {
 			var kiosk = kioskResult.responseJSON.d.list[i];
-			for(var j = 0; j < closestKiosks.length; j++) {
-				if(closestKiosks[j] === null) {
-					closestKiosks[j] = kiosk;
-					break;
-				} else {
-					var d1 = calcDistance(latitude, longitude, closestKiosks[j].Location.Latitude, closestKiosks[j].Location.Longitude);
-					var d2 = calcDistance(latitude, longitude, kiosk.Location.Latitude, kiosk.Location.Longitude);
-					
-					if(d2 < d1) {
-						// Swap
-						var temp = kiosk;
-						kiosk = closestKiosks[j];
-						closestKiosks[j] = temp;
-					}
-				}
+			var d1 = calcDistance(latitude, longitude, kiosk.Location.Latitude, kiosk.Location.Longitude);
+			if(d1 < this.radius) {
+				closestKiosks.push(kiosk);
 			}
 		}
+		
+		closestKiosks.sort(sortByDistance);
 		
 		var kiosks = [];
 		for(i = 0; i < closestKiosks.length; i++) {
@@ -157,5 +152,9 @@ MainAssistant.prototype = {
 			gps: this.gpsCoord
 		};
 		this.controller.stageController.pushScene('mapScene', argToScene);
+	},
+	radiusSelectorChange: function(inSender, event) {
+		this.radius = event.value;
 	}
+
 };
