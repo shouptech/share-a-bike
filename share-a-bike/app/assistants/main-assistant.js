@@ -132,7 +132,10 @@ MainAssistant.prototype = {
 				bikes: closestKiosks[i].BikesAvailable,
 				docks: closestKiosks[i].DocksAvailable,
 				latitude: closestKiosks[i].Location.Latitude,
-				longitude: closestKiosks[i].Location.Longitude
+				longitude: closestKiosks[i].Location.Longitude,
+				city: closestKiosks[i].Address.City,
+				state: closestKiosks[i].Address.State,
+				zip: closestKiosks[i].Address.ZipCode
 			};
 		}
 		
@@ -158,6 +161,10 @@ MainAssistant.prototype = {
 	},
 	radiusSelectorChange: function(inSender, event) {
 		this.radius = event.value;
+	},
+	kioskListListtap: function(inSender, event) {
+		var argToScene = event.item;
+		this.controller.stageController.pushScene('kiosk', argToScene);
 	}
 
 };

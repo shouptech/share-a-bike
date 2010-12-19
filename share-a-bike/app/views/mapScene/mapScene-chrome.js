@@ -8,7 +8,7 @@ opus.Gizmo({
 	},
 	chrome: [
 		{
-			name: "pageHeader1",
+			name: "mapHeader",
 			title: "Kiosks Map",
 			subtitle: "",
 			type: "Palm.Mojo.PageHeader",
@@ -17,8 +17,8 @@ opus.Gizmo({
 		},
 		{
 			name: "kioskMap",
-			latitude: 0,
-			longitude: 0,
+			latitude: 39.739167,
+			longitude: -104.984722,
 			type: "Palm.Mojo.Map",
 			l: 0,
 			t: 49,

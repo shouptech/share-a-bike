@@ -22,7 +22,7 @@ opus.Gizmo({
 			}
 		},
 		{
-			name: "scroller1",
+			name: "kiosksScroller",
 			scrollPosition: {
 				left: 0,
 				top: 0
@@ -42,10 +42,9 @@ opus.Gizmo({
 					items: [],
 					useSampleData: false,
 					title: undefined,
-					itemHtml: "<div class=\"palm-row\">\n  <div class=\"kiosk_container\">\n    <div class=\"kiosk_name\">\n      #{name}\n    </div>\n    <div class=\"kiosk_address\">\n      #{address}\n    </div>\n    <div class=\"kiosk_stats\">\n      #{distance} | #{bikes} bikes | #{docks} docks\n    </div>\n  </div>\n</div>",
+					itemHtml: "<div class='result palm-row' x-mojo-tap-highlight='momentary'>\n  <div class=\"palm-row-wrapper\">\n    <div class=\"kiosk_container\">\n      <div class=\"kiosk_name\">\n        #{name}\n      </div>\n      <div class=\"kiosk_address\">\n        #{address}\n      </div>\n      <div class=\"kiosk_stats\">\n        #{distance} | #{bikes} bikes | #{docks} docks\n      </div>\n    </div>\n  </div>\n</div>",
+					onlisttap: "kioskListListtap",
 					swipeToDelete: false,
-					rowTapHighlight: false,
-					rowFocusHighlight: false,
 					type: "Palm.Mojo.List",
 					l: 0,
 					t: 0,
@@ -54,7 +53,7 @@ opus.Gizmo({
 			]
 		},
 		{
-			name: "panel2",
+			name: "buttonsVbox",
 			dropTarget: true,
 			type: "Palm.Mojo.Panel",
 			l: 0,
@@ -62,7 +61,7 @@ opus.Gizmo({
 			h: "120",
 			controls: [
 				{
-					name: "panel1",
+					name: "findHbox",
 					layoutKind: "hbox",
 					dropTarget: true,
 					type: "Palm.Mojo.Panel",
@@ -81,7 +80,7 @@ opus.Gizmo({
 							h: "100%"
 						},
 						{
-							name: "group1",
+							name: "radiusGroup",
 							dropTarget: true,
 							label: "",
 							type: "Palm.Mojo.Group",
@@ -93,7 +92,7 @@ opus.Gizmo({
 							},
 							controls: [
 								{
-									name: "row1",
+									name: "radiusRow",
 									dropTarget: true,
 									type: "Palm.Mojo.Row",
 									l: 0,
@@ -101,7 +100,7 @@ opus.Gizmo({
 									h: "auto",
 									controls: [
 										{
-											name: "listSelector3",
+											name: "radiusSelector",
 											value: 0.5,
 											choices: [
 												{

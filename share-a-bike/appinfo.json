@@ -1,6 +1,6 @@
 {
 	"id": "com.mikeshoup.share-a-bike",
-	"version": "0.1.5", 
+	"version": "0.2.1", 
 	"vendor": "Mike Shoup",
 	"type": "web",
 	"main": "index.html",
