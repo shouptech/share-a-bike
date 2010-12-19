@@ -8,15 +8,18 @@ opus.Gizmo({
 	},
 	chrome: [
 		{
-			name: "pageHeader2",
-			title: "17th & Grant",
+			name: "nameHeader",
+			title: "",
 			subtitle: "",
 			type: "Palm.Mojo.PageHeader",
 			l: 0,
-			t: 0
+			t: 0,
+			styles: {
+				textAlign: "left"
+			}
 		},
 		{
-			name: "scroller1",
+			name: "infoScroller",
 			scrollPosition: {
 				left: 0,
 				top: 0
@@ -26,69 +29,60 @@ opus.Gizmo({
 			t: 0,
 			h: "100%",
 			styles: {
+				margin: "5",
 				cursor: "move",
-				overflow: "hidden"
+				overflow: "hidden",
+				opacity: 1
 			},
 			controls: [
 				{
-					name: "group1",
-					dropTarget: true,
-					label: "Location",
-					type: "Palm.Mojo.Group",
+					name: "addressDivider",
+					label: "Address",
+					type: "Palm.Mojo.Divider",
 					l: 0,
 					t: 0,
-					h: "100",
-					controls: [
-						{
-							name: "row1",
-							dropTarget: true,
-							focusHighlight: false,
-							tapHighlight: false,
-							type: "Palm.Mojo.Row",
-							l: 0,
-							t: 0,
-							h: "100%",
-							controls: [
-								{
-									name: "label2",
-									kind: "title",
-									label: "1700 Grant St",
-									type: "Palm.Mojo.Label",
-									l: "4",
-									t: 0,
-									h: "28"
-								},
-								{
-									name: "label3",
-									kind: "title",
-									label: "Denver, CO 80000",
-									type: "Palm.Mojo.Label",
-									l: "4",
-									t: 28,
-									h: "28"
-								}
-							]
-						}
-					]
+					styles: {
+						opacity: 1
+					}
 				},
 				{
-					name: "group2",
-					dropTarget: true,
-					label: "Availability",
-					type: "Palm.Mojo.Group",
+					name: "streetLabel",
+					label: "",
+					type: "Palm.Mojo.Label",
 					l: 0,
-					t: 95,
-					controls: [
-						{
-							name: "row2",
-							dropTarget: true,
-							focusHighlight: false,
-							tapHighlight: false,
-							type: "Palm.Mojo.Row",
-							l: 0,
-							t: 0
-						}
-					]
+					t: 34,
+					h: "30"
+				},
+				{
+					name: "cityLabel",
+					label: "",
+					type: "Palm.Mojo.Label",
+					l: 0,
+					t: 34,
+					h: "30"
+				},
+				{
+					name: "availDivider",
+					label: "Availability",
+					type: "Palm.Mojo.Divider",
+					l: 0,
+					t: 94
+				},
+				{
+					name: "bikesLabel",
+					label: "",
+					type: "Palm.Mojo.Label",
+					l: 0,
+					t: 128,
+					h: "30"
+				},
+				{
+					name: "docksLabel",
+					label: "",
+					type: "Palm.Mojo.Label",
+					l: 0,
+					t: 158,
+					h: "30"
 				}
 			]
 		}
