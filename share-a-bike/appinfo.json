@@ -5,6 +5,7 @@
 	"type": "web",
 	"main": "index.html",
 	"title": "Share-a-Bike",
+	"theme": "light",
 	"icon": "icon.png",
 	"smallicon": "images/icon-32.png",
 	"copyright": "&copy; Copyright 2010 Mike Shoup",

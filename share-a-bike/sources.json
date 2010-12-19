@@ -17,5 +17,13 @@
     {
         "source": "app/views/mapScene/mapScene-chrome.js", 
         "scenes": "mapScene"
+    }, 
+    {
+        "source": "app/assistants/kiosk-assistant.js", 
+        "scenes": "kiosk"
+    }, 
+    {
+        "source": "app/views/kiosk/kiosk-chrome.js", 
+        "scenes": "kiosk"
     }
 ]
